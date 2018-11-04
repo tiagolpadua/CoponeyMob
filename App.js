@@ -7,8 +7,10 @@ import { DetailsScreen } from './components/DetailsScreen';
 import request from 'superagent';
 
 import reducer from './reducers';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { set } from './reducers';
 
 request
   .get('https://cat-fact.herokuapp.com/facts')
@@ -29,7 +31,15 @@ const RootStack = createStackNavigator(
   }
 );
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
+
+function setToRemote() {
+  return dispatch =>
+    request.get('https://cat-fact.herokuapp.com/facts')
+    .then(res => dispatch(set(res.body.all.length)))
+};
+
+store.dispatch(setToRemote());
 
 export default class App extends React.Component {
   render() {
