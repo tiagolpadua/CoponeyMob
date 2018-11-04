@@ -1,48 +1,32 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
-export class HomeScreen extends React.Component {
+import { increment, decrement, reset } from '../reducers';
+
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      count: 0
-    }
-  }
-
-  increment = () => {
-    this.setState({
-      count: this.state.count += 1
-    });
-  }
-
-  decrement = () => {
-    this.setState({
-      count: this.state.count -= 1
-    });
-  }
-
-  reset = () => {
-    this.setState({
-      count: 0
-    });
   }
 
   render() {
+    const { counter } = this.props;
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
-        <Text>Contador: {this.state.count}</Text>
+        <Text>Contador: { counter }</Text>
         <Button
           title="Incrementar"
-          onPress={() => this.increment()}
+          onPress={() => this.props.increment()}
         />
         <Button
           title="Decrementar"
-          onPress={() => this.decrement()}
+          onPress={() => this.props.decrement()}
         />
         <Button
           title="Resetar"
-          onPress={() => this.reset()}
+          onPress={() => this.props.reset()}
         />
         <Button
           title="Go to Details"
@@ -52,3 +36,17 @@ export class HomeScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    counter: state.counter
+  };
+};
+
+const mapDispatchToProps = {
+  increment,
+  decrement,
+  reset
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
