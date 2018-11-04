@@ -33,12 +33,16 @@ export class HomeScreen extends React.Component {
         <Text>Home Screen</Text>
         <Text>Contador: {this.state.count}</Text>
         <Button
-          title="Add"
-          onPress={() => this.add()}
+          title="Incrementar"
+          onPress={() => this.increment()}
         />
         <Button
-          title="Remove"
-          onPress={() => this.remove()}
+          title="Decrementar"
+          onPress={() => this.decrement()}
+        />
+        <Button
+          title="Resetar"
+          onPress={() => this.reset()}
         />
         <Button
           title="Go to Details"
