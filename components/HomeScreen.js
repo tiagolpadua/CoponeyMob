@@ -10,7 +10,8 @@ class HomeScreen extends React.Component {
       modalVisible: false,
       userName: 'admin',
       password: '123456',
-      login: false
+      login: false,
+      refresh: false
     };
   }
 
@@ -22,10 +23,17 @@ class HomeScreen extends React.Component {
     this.setState({ modalVisible: true });
   }
 
+  refresh = () => {
+    this.setState({
+      refresh: !this.state.refresh
+    })
+  }
+
   login = () => {
     this.closeModal();
     if (this.state.userName === 'admin' && this.state.password === '123456') {
       this.setState({ login: true });
+      this.refresh();
     } else {
       Alert.alert(
         'Erro',
@@ -38,12 +46,15 @@ class HomeScreen extends React.Component {
   }
 
   logoff = () => {
+    this.refresh();
     this.setState({
       userName: 'admin',
       password: '123456',
       login: false
     });
   }
+
+  noop = () => null;
 
   getUser = () => {
     if (this.state.login) {
@@ -61,15 +72,21 @@ class HomeScreen extends React.Component {
   render() {
     const { poneys } = this.props;
 
+    const isLoggedIn = this.state.login;
+
     return (
       <View>
         {this.getUser()}
+        {isLoggedIn && <Button title="Novo Poney" onPress={this.noop} />}
         <FlatList
           data={poneys}
+          extraData={this.state.refresh}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <Text style={styles.item}>{item.nome}</Text>
               <Text style={styles.item}>{item.cor}</Text>
+              {isLoggedIn && <Button title="Excluir" onPress={this.noop} />}
+              {isLoggedIn && <Button title="Editar" onPress={this.noop} />}
             </View>
           )}
         />
@@ -118,7 +135,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
-    width: 150
+    width: 120
   },
 })
 
