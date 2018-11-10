@@ -1,0 +1,7 @@
+const ADD_PONEY = "ADD_PONEY";
+const DELETE_PONEY = "DELETE_PONEY";
+
+const LOGIN = "LOGIN";
+const LOGOUT = "LOGOUT";
+
+export { ADD_PONEY, DELETE_PONEY, LOGIN, LOGOUT };

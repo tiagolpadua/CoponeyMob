@@ -1,65 +1,71 @@
+import { Text } from "native-base";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import Reactotron from "reactotron-react-native";
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import { DetailsScreen } from "./components/DetailsScreen";
-import HomeScreenNB from "./components/HomeScreenNB";
+import { DetalhaPoneyScreen } from "./components/DetalhaPoneyScreen";
+import ListagemPoneysScreen from "./components/ListagemPoneysScreen";
+import ProfileComponent from "./components/ProfileComponent";
+import configureStore from "./configureStore";
 import "./ReactotronConfig";
-import reducer from "./reducers";
 
 Reactotron.log("Testando a conexão com o Reactotron.");
 
 const RootStack = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreenNB,
+    ListagemPoneys: {
+      screen: ListagemPoneysScreen,
       navigationOptions: () => ({
-        title: "Listagem de Poneys"
+        title: "Listagem de Poneys",
+        headerRight: <ProfileComponent />
       })
     },
-    Details: DetailsScreen
+    DetalhaPoney: DetalhaPoneyScreen
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "ListagemPoneys"
   }
 );
 
-const store = createStore(reducer, applyMiddleware(thunk));
+// const store = createStore(reducer, applyMiddleware(thunk));
+
+const store = configureStore();
 
 export default class CoponeyMob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      isReady: false
     };
   }
 
   async componentDidMount() {
     await Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      Ionicons: require("native-base/Fonts/Ionicons.ttf")
     });
-    setTimeout(() => this.setState({ loading: false }), 0);
+    setTimeout(() => this.setState({ isReady: true }), 0);
   }
 
   render() {
-    return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          {this.state.loading ? (
-            <View style={styles.splashContainer}>
-              <Text style={styles.loadingText}>Carregando...</Text>
-              <Image source={require("./assets/loading.gif")} />
-            </View>
-          ) : (
-            <RootStack />
-          )}
+    if (!this.state.isReady) {
+      return (
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Carregando...</Text>
+          <Image source={require("./assets/loading.gif")} />
         </View>
-      </Provider>
-    );
+      );
+    } else {
+      return (
+        <Provider store={store}>
+          <View style={styles.container}>
+            <RootStack />
+          </View>
+        </Provider>
+      );
+    }
   }
 }
 
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 22
   },
-  splashContainer: {
+  loadingContainer: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",

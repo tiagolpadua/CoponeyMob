@@ -1,14 +1,23 @@
-import React from 'react';
-import { Alert, TextInput, Modal, Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import { Text, Body, Button, Left, ListItem, Right, Icon } from "native-base";
+import PropTypes from "prop-types";
+import React from "react";
+import {
+  Alert,
+  FlatList,
+  Modal,
+  StyleSheet,
+  TextInput,
+  View
+} from "react-native";
+import { connect } from "react-redux";
 
-class HomeScreen extends React.Component {
+class ListagemPoneysScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
-      userName: 'admin',
-      password: '123456',
+      userName: "admin",
+      password: "123456",
       login: false,
       refresh: false
     };
@@ -16,42 +25,36 @@ class HomeScreen extends React.Component {
 
   closeModal = () => {
     this.setState({ modalVisible: false });
-  }
+  };
 
   openModal = () => {
     this.setState({ modalVisible: true });
-  }
+  };
 
   refresh = () => {
     this.setState({
       refresh: !this.state.refresh
-    })
-  }
+    });
+  };
 
   login = () => {
     this.closeModal();
-    if (this.state.userName === 'admin' && this.state.password === '123456') {
+    if (this.state.userName === "admin" && this.state.password === "123456") {
       this.setState({ login: true });
       this.refresh();
     } else {
-      Alert.alert(
-        'Erro',
-        'Credenciais inválidas',
-        [
-          { text: 'OK' },
-        ]
-      )
+      Alert.alert("Erro", "Credenciais inválidas", [{ text: "OK" }]);
     }
-  }
+  };
 
   logoff = () => {
     this.refresh();
     this.setState({
-      userName: 'admin',
-      password: '123456',
+      userName: "admin",
+      password: "123456",
       login: false
     });
-  }
+  };
 
   noop = () => null;
 
@@ -60,13 +63,19 @@ class HomeScreen extends React.Component {
       return (
         <View>
           <Text>Usuário Logado: {this.state.userName}</Text>
-          <Button title="Logoff" onPress={this.logoff} />
+          <Button primary onPress={this.logoff}>
+            <Text>Logoff</Text>
+          </Button>
         </View>
       );
     } else {
-      return <Button title="Logar" onPress={this.openModal} />
+      return (
+        <Button primary onPress={this.openModal}>
+          <Text>Logar</Text>
+        </Button>
+      );
     }
-  }
+  };
 
   render() {
     const { poneys } = this.props;
@@ -76,23 +85,31 @@ class HomeScreen extends React.Component {
     return (
       <View>
         {this.getUser()}
-        {isLoggedIn && <Button title="Novo Poney" onPress={this.noop} />}
+        {isLoggedIn && (
+          <Button primary onPress={this.noop}>
+            <Text>Novo Poney</Text>
+          </Button>
+        )}
         <FlatList
-          data={poneys}
+          data={poneys.list}
           extraData={this.state.refresh}
           renderItem={({ item }) => (
-            <View style={styles.itemContainer}>
-              <Text style={styles.item}>{item.nome}</Text>
-              <Text style={styles.item}>{item.cor}</Text>
-              {isLoggedIn && <Button title="Excluir" onPress={this.noop} />}
-              {isLoggedIn && <Button title="Editar" onPress={this.noop} />}
-            </View>
+            <ListItem noIndent>
+              <Left>
+                <Text style={styles.item}>{item.nome}</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
           )}
+          keyExtractor={item => item._id}
         />
         <Modal
           animationType="slide"
           visible={this.state.modalVisible}
-          onRequestClose={this.closeModal}>
+          onRequestClose={this.closeModal}
+        >
           <View style={{ marginTop: 22 }}>
             <View>
               <TextInput
@@ -104,8 +121,12 @@ class HomeScreen extends React.Component {
                 onChangeText={password => this.setState({ password })}
                 value={this.state.password}
               />
-              <Button title="Ok" onPress={this.login} />
-              <Button title="Cancelar" onPress={this.closeModal} />
+              <Button onPress={this.login}>
+                <Text>Ok</Text>
+              </Button>
+              <Button onPress={this.closeModal}>
+                <Text>Cancelar</Text>
+              </Button>
             </View>
           </View>
         </Modal>
@@ -114,19 +135,22 @@ class HomeScreen extends React.Component {
   }
 }
 
+ListagemPoneysScreen.propTypes = {
+  poneys: PropTypes.object
+};
+
 const mapStateToProps = state => {
   return {
     poneys: state.poneys
   };
 };
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1
   },
   item: {
@@ -134,7 +158,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
     width: 120
-  },
-})
+  }
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListagemPoneysScreen);
