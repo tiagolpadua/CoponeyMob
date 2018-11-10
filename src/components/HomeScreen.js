@@ -2,7 +2,6 @@ import React from 'react';
 import { Alert, TextInput, Modal, Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +104,6 @@ class HomeScreen extends React.Component {
                 onChangeText={password => this.setState({ password })}
                 value={this.state.password}
               />
-
               <Button title="Ok" onPress={this.login} />
               <Button title="Cancelar" onPress={this.closeModal} />
             </View>
