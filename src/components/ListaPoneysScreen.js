@@ -1,8 +1,10 @@
 import { Button, Icon, Left, ListItem, Right, Text } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { deletePoney } from "../actions";
 
 class ListaPoneysScreen extends React.Component {
   constructor(props) {
@@ -10,6 +12,13 @@ class ListaPoneysScreen extends React.Component {
   }
 
   noop = () => null;
+
+  handleDeletePoney = poney => {
+    Alert.alert("Exclusão", `Confirma a exclusão do poney ${poney.nome}?`, [
+      { text: "Sim", onPress: () => this.props.deletePoney(poney) },
+      { text: "Não", style: "cancel" }
+    ]);
+  };
 
   render() {
     const { poneys } = this.props;
@@ -30,7 +39,7 @@ class ListaPoneysScreen extends React.Component {
                     <Button primary style={{ marginRight: 10 }}>
                       <Icon name="create" />
                     </Button>
-                    <Button danger>
+                    <Button danger onPress={() => this.handleDeletePoney(item)}>
                       <Icon name="trash" />
                     </Button>
                   </View>
@@ -47,7 +56,8 @@ class ListaPoneysScreen extends React.Component {
 
 ListaPoneysScreen.propTypes = {
   poneys: PropTypes.object,
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  deletePoney: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -57,7 +67,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ deletePoney }, dispatch);
 
 const styles = StyleSheet.create({
   itemContainer: {
