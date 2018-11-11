@@ -4,19 +4,12 @@ import { View } from "react-native";
 import { Field, reduxForm } from "redux-form";
 
 const validate = values => {
-  console.log("values:");
-  console.log(values);
-  const error = {};
-  error.nome = "";
-  error.cor = "";
-  var nome = values.nome;
-  var cor = values.cor;
-  if (values.nome === undefined) {
-    nome = "";
-  }
-  if (values.cor === undefined) {
-    cor = "";
-  }
+  const error = {
+    nome: "",
+    cor: ""
+  };
+  let nome = values.nome || "";
+  let cor = values.cor || "";
   if (nome.length < 3) {
     error.nome = "Muito curto";
   }
@@ -30,7 +23,7 @@ const validate = values => {
 };
 
 class MantemPoneyForm extends React.Component {
-  renderInput = ({ input, label, type, meta: { touched, error, warning } }) => {
+  renderInput = ({ input, label, meta: { error } }) => {
     var hasError = false;
     if (error !== undefined) {
       hasError = true;
@@ -47,7 +40,6 @@ class MantemPoneyForm extends React.Component {
 
   renderPicker = ({
     input: { onChange, value, ...inputProps },
-    children,
     ...pickerProps
   }) => {
     return (
@@ -75,8 +67,7 @@ class MantemPoneyForm extends React.Component {
   };
 
   render() {
-    const { invalid } = this.props;
-
+    const { invalid, handleSubmit } = this.props;
     return (
       <View style={{ marginTop: 10 }}>
         <Field name="nome" label="Nome" component={this.renderInput} />
@@ -87,7 +78,7 @@ class MantemPoneyForm extends React.Component {
           full
           primary
           style={{ marginBottom: 20 }}
-          onPress={() => alert("pressed!")}
+          onPress={handleSubmit}
         >
           <Text>Salvar</Text>
         </Button>

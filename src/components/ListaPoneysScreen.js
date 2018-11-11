@@ -38,7 +38,15 @@ class ListaPoneysScreen extends React.Component {
               <Right>
                 {this.props.profile.user && (
                   <View style={{ flexDirection: "row", flex: 1 }}>
-                    <Button primary style={{ marginRight: 10 }}>
+                    <Button
+                      primary
+                      onPress={() =>
+                        this.props.navigation.navigate("AtualizarPoney", {
+                          poney: item
+                        })
+                      }
+                      style={{ marginRight: 10 }}
+                    >
                       <Icon name="create" />
                     </Button>
                     <Button danger onPress={() => this.handleDeletePoney(item)}>
@@ -74,6 +82,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ loadPoneys, deletePoney }, dispatch);
 
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListaPoneysScreen);
+
 const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
@@ -87,8 +100,3 @@ const styles = StyleSheet.create({
     width: 120
   }
 });
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ListaPoneysScreen);

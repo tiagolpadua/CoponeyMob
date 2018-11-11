@@ -4,9 +4,10 @@ import { StyleSheet, View } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 import { createStackNavigator } from "react-navigation";
 import { connect } from "react-redux";
+import AdicionaPoneyScreen from "./components/AdicionaPoneyScreen";
+import AtualizaPoneyScreen from "./components/AtualizaPoneyScreen";
 import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
 import ListarPoneysScreen from "./components/ListaPoneysScreen";
-import MantemPoneyForm from "./components/MantemPoneyForm";
 import "./ReactotronConfig";
 
 const RootStack = createStackNavigator(
@@ -19,9 +20,15 @@ const RootStack = createStackNavigator(
       })
     },
     IncluirPoney: {
-      screen: MantemPoneyForm,
+      screen: AdicionaPoneyScreen,
       navigationOptions: () => ({
         title: "Incluir Poney"
+      })
+    },
+    AtualizarPoney: {
+      screen: AtualizaPoneyScreen,
+      navigationOptions: () => ({
+        title: "Atualizar Poney"
       })
     }
   },

@@ -1,4 +1,9 @@
-import { loadPoneysAPI, deletePoneyAPI } from "./api";
+import {
+  loadPoneysAPI,
+  deletePoneyAPI,
+  addPoneyAPI,
+  updatePoneyAPI
+} from "./api";
 import {
   ADD_PONEY,
   LOAD_PONEYS,
@@ -6,7 +11,8 @@ import {
   LOGOUT,
   SET_LOADING,
   SET_ERROR,
-  DELETE_PONEY
+  DELETE_PONEY,
+  UPDATE_PONEY
 } from "./constants";
 
 export function loadPoneys() {
@@ -66,9 +72,58 @@ export function deletePoney(id) {
 }
 
 export function addPoney(data) {
-  return {
-    type: ADD_PONEY,
-    data
+  return dipatch => {
+    dipatch({
+      type: SET_LOADING,
+      data: true
+    });
+    addPoneyAPI(data)
+      .then(res => {
+        dipatch({
+          type: ADD_PONEY,
+          data: { ...data, _id: res.body }
+        });
+      })
+      .catch(error => {
+        dipatch({
+          type: SET_ERROR,
+          data: error.message
+        });
+      })
+      .finally(() => {
+        dipatch({
+          type: SET_LOADING,
+          data: false
+        });
+      });
+  };
+}
+
+export function updatePoney(data) {
+  return dipatch => {
+    dipatch({
+      type: SET_LOADING,
+      data: true
+    });
+    updatePoneyAPI(data)
+      .then(() => {
+        dipatch({
+          type: UPDATE_PONEY,
+          data
+        });
+      })
+      .catch(error => {
+        dipatch({
+          type: SET_ERROR,
+          data: error.message
+        });
+      })
+      .finally(() => {
+        dipatch({
+          type: SET_LOADING,
+          data: false
+        });
+      });
   };
 }
 
