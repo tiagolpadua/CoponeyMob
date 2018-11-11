@@ -114,7 +114,7 @@ class HeaderButtonsComponent extends React.Component {
               <Icon
                 style={[styles.headerIconFont, styles.headerIconMargin]}
                 name="add"
-                onPress={() => this.props.navigation.navigate("MantemPoney")}
+                onPress={() => this.props.navigation.navigate("IncluirPoney")}
               />
             </Button>
             <Button transparent onPress={this.handleLogout}>

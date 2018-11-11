@@ -5,23 +5,28 @@ import Spinner from "react-native-loading-spinner-overlay";
 import { createStackNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
-import ListaPoneysScreen from "./components/ListaPoneysScreen";
-import { MantemPoneyScreen } from "./components/MantemPoneyScreen";
+import ListarPoneysScreen from "./components/ListaPoneysScreen";
+import MantemPoneyForm from "./components/MantemPoneyForm";
 import "./ReactotronConfig";
 
 const RootStack = createStackNavigator(
   {
-    ListagemPoneys: {
-      screen: ListaPoneysScreen,
+    ListarPoneys: {
+      screen: ListarPoneysScreen,
       navigationOptions: ({ navigation }) => ({
         title: "Lista de Poneys",
         headerRight: <HeaderButtonsComponent navigation={navigation} />
       })
     },
-    MantemPoney: MantemPoneyScreen
+    IncluirPoney: {
+      screen: MantemPoneyForm,
+      navigationOptions: () => ({
+        title: "Incluir Poney"
+      })
+    }
   },
   {
-    initialRouteName: "ListagemPoneys"
+    initialRouteName: "ListarPoneys"
   }
 );
 
