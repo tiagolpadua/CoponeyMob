@@ -57,7 +57,8 @@ class ListaPoneysScreen extends React.Component {
 ListaPoneysScreen.propTypes = {
   poneys: PropTypes.object,
   profile: PropTypes.object,
-  deletePoney: PropTypes.func
+  deletePoney: PropTypes.func,
+  navigation: PropTypes.object
 };
 
 const mapStateToProps = state => {

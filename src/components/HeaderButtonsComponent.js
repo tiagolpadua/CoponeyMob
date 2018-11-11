@@ -114,6 +114,7 @@ class HeaderButtonsComponent extends React.Component {
               <Icon
                 style={[styles.headerIconFont, styles.headerIconMargin]}
                 name="add"
+                onPress={() => this.props.navigation.navigate("MantemPoney")}
               />
             </Button>
             <Button transparent onPress={this.handleLogout}>
@@ -138,7 +139,8 @@ class HeaderButtonsComponent extends React.Component {
 }
 
 HeaderButtonsComponent.propTypes = {
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 const mapStateToProps = state => {

@@ -16,12 +16,13 @@ const RootStack = createStackNavigator(
   {
     ListagemPoneys: {
       screen: ListaPoneysScreen,
-      navigationOptions: () => ({
+      navigationOptions: ({ navigation }) => ({
         title: "Lista de Poneys",
-        headerRight: <HeaderButtonsComponent />
+        headerRight: <HeaderButtonsComponent navigation={navigation} />
+        //headerRight: ({navigate}) => <HeaderButtonsComponent navigate={navigate}/>
       })
     },
-    DetalhaPoney: MantemPoneyScreen
+    MantemPoney: MantemPoneyScreen
   },
   {
     initialRouteName: "ListagemPoneys"
