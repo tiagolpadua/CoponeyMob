@@ -4,7 +4,7 @@ import {
   LOAD_PONEYS,
   LOGIN,
   LOGOUT,
-  LOADING,
+  SET_LOADING,
   SET_ERROR,
   DELETE_PONEY
 } from "./constants";
@@ -12,7 +12,7 @@ import {
 export function loadPoneys() {
   return dipatch => {
     dipatch({
-      type: LOADING,
+      type: SET_LOADING,
       data: true
     });
     loadPoneysAPI()
@@ -21,18 +21,16 @@ export function loadPoneys() {
           type: LOAD_PONEYS,
           data: res.body
         });
-        dipatch({
-          type: LOADING,
-          data: false
-        });
       })
       .catch(error => {
         dipatch({
           type: SET_ERROR,
           data: error.message
         });
+      })
+      .finally(() => {
         dipatch({
-          type: LOADING,
+          type: SET_LOADING,
           data: false
         });
       });
@@ -42,7 +40,7 @@ export function loadPoneys() {
 export function deletePoney(id) {
   return dipatch => {
     dipatch({
-      type: LOADING,
+      type: SET_LOADING,
       data: true
     });
     deletePoneyAPI(id)
@@ -55,7 +53,13 @@ export function deletePoney(id) {
       .catch(error => {
         dipatch({
           type: SET_ERROR,
-          error
+          data: error.message
+        });
+      })
+      .finally(() => {
+        dipatch({
+          type: SET_LOADING,
+          data: false
         });
       });
   };
@@ -67,13 +71,6 @@ export function addPoney(data) {
     data
   };
 }
-
-/* export function deletePoney(data) {
-  return {
-    type: DELETE_PONEY,
-    data
-  };
-} */
 
 export function login(data) {
   return {

@@ -17,7 +17,7 @@ export default function poneysReducer(state = initialState, action) {
     case DELETE_PONEY:
       return {
         ...state,
-        list: state.list.filter(p => p._id !== action.data.id)
+        list: state.list.filter(p => p._id !== action.data)
       };
     default:
       return state;

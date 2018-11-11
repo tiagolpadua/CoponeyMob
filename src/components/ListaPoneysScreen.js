@@ -13,7 +13,7 @@ class ListaPoneysScreen extends React.Component {
 
   handleDeletePoney = poney => {
     Alert.alert("Exclusão", `Confirma a exclusão do poney ${poney.nome}?`, [
-      { text: "Sim", onPress: () => this.props.deletePoney(poney) },
+      { text: "Sim", onPress: () => this.props.deletePoney(poney._id) },
       { text: "Não", style: "cancel" }
     ]);
   };

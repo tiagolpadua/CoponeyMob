@@ -1,4 +1,4 @@
-import { LOADING, SET_ERROR } from "../constants";
+import { SET_LOADING, SET_ERROR } from "../constants";
 
 const initialState = { loading: false, error: null };
 
@@ -9,7 +9,7 @@ export default function appReducer(state = initialState, action) {
         ...state,
         error: action.data
       };
-    case LOADING:
+    case SET_LOADING:
       return {
         ...state,
         loading: action.data
