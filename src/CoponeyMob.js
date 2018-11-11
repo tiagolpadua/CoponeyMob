@@ -4,9 +4,9 @@ import { Image, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import Reactotron from "reactotron-react-native";
-import { DetalhaPoneyScreen } from "./components/DetalhaPoneyScreen";
-import ListagemPoneysScreen from "./components/ListagemPoneysScreen";
-import ProfileComponent from "./components/ProfileComponent";
+import { MantemPoneyScreen } from "./components/MantemPoneyScreen";
+import ListaPoneysScreen from "./components/ListaPoneysScreen";
+import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
 import configureStore from "./configureStore";
 import "./ReactotronConfig";
 
@@ -15,13 +15,13 @@ Reactotron.log("Testando a conexão com o Reactotron.");
 const RootStack = createStackNavigator(
   {
     ListagemPoneys: {
-      screen: ListagemPoneysScreen,
+      screen: ListaPoneysScreen,
       navigationOptions: () => ({
-        title: "Listagem de Poneys",
-        headerRight: <ProfileComponent />
+        title: "Lista de Poneys",
+        headerRight: <HeaderButtonsComponent />
       })
     },
-    DetalhaPoney: DetalhaPoneyScreen
+    DetalhaPoney: MantemPoneyScreen
   },
   {
     initialRouteName: "ListagemPoneys"
@@ -71,8 +71,7 @@ export default class CoponeyMob extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 22
+    flex: 1
   },
   loadingContainer: {
     flexDirection: "column",

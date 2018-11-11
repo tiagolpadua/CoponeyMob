@@ -10,12 +10,12 @@ import {
 } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
-import { Image, Modal, Alert } from "react-native";
+import { StyleSheet, Image, Modal, Alert } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { login, logout } from "../actions";
 
-class ProfileComponent extends React.Component {
+class HeaderButtonsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ class ProfileComponent extends React.Component {
     };
   }
 
-  closeModal = () => {
+  closeLoginModal = () => {
     this.setState({ modalVisible: false });
   };
 
@@ -36,7 +36,7 @@ class ProfileComponent extends React.Component {
   };
 
   handleLogin = () => {
-    this.closeModal();
+    this.closeLoginModal();
     if (this.state.userName === "admin" && this.state.password === "123456") {
       this.props.login({ name: this.state.userName });
     } else {
@@ -44,12 +44,24 @@ class ProfileComponent extends React.Component {
     }
   };
 
+  handleLogout = () => {
+    Alert.alert(
+      "Logout",
+      this.props.profile.user.name + ", confirma o logout?",
+      [
+        { text: "Sim", onPress: this.props.logout },
+        { text: "Não", style: "cancel" }
+      ],
+      { cancelable: false }
+    );
+  };
+
   renderLoginModal = () => {
     return (
       <Modal
         animationType="slide"
         visible={this.state.modalVisible}
-        onRequestClose={this.closeModal}
+        onRequestClose={this.closeLoginModal}
       >
         <View>
           <Form>
@@ -78,7 +90,7 @@ class ProfileComponent extends React.Component {
             >
               <Text>Login</Text>
             </Button>
-            <Button full light onPress={this.closeModal}>
+            <Button full light onPress={this.closeLoginModal}>
               <Text>Cancelar</Text>
             </Button>
           </Form>
@@ -87,28 +99,36 @@ class ProfileComponent extends React.Component {
     );
   };
 
-  handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      this.props.profile.user.name + ", confirma o logout?",
-      [
-        { text: "Sim", onPress: this.props.logout },
-        { text: "Não", style: "cancel" }
-      ],
-      { cancelable: false }
-    );
-  };
-
   render() {
     return (
-      <View style={{ paddingRight: 10 }}>
+      <View style={styles.headerButtonContainer}>
+        <Button transparent>
+          <Icon
+            style={[styles.headerIconFont, styles.headerIconMargin]}
+            name="eye"
+          />
+        </Button>
         {this.props.profile.user ? (
-          <Button transparent onPress={this.handleLogout}>
-            <Image source={require("../assets/admin.png")} />
-          </Button>
+          <View style={styles.headerButtonContainer}>
+            <Button transparent>
+              <Icon
+                style={[styles.headerIconFont, styles.headerIconMargin]}
+                name="add"
+              />
+            </Button>
+            <Button transparent onPress={this.handleLogout}>
+              <Image
+                style={styles.headerIconMargin}
+                source={require("../assets/admin.png")}
+              />
+            </Button>
+          </View>
         ) : (
-          <Button onPress={this.openLoginModal}>
-            <Icon name="contact" />
+          <Button transparent onPress={this.openLoginModal}>
+            <Icon
+              style={[styles.headerIconFont, styles.headerIconMargin]}
+              name="contact"
+            />
           </Button>
         )}
         {this.renderLoginModal()}
@@ -117,7 +137,7 @@ class ProfileComponent extends React.Component {
   }
 }
 
-ProfileComponent.propTypes = {
+HeaderButtonsComponent.propTypes = {
   profile: PropTypes.object
 };
 
@@ -130,12 +150,26 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ login, logout }, dispatch);
 
-ProfileComponent.propTypes = {
+HeaderButtonsComponent.propTypes = {
   login: PropTypes.func,
   logout: PropTypes.func
 };
 
+const styles = StyleSheet.create({
+  headerButtonContainer: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  headerIconMargin: {
+    marginLeft: 10,
+    marginRight: 10
+  },
+  headerIconFont: {
+    fontSize: 35
+  }
+});
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileComponent);
+)(HeaderButtonsComponent);
