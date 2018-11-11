@@ -12,7 +12,8 @@ import {
   SET_LOADING,
   SET_ERROR,
   DELETE_PONEY,
-  UPDATE_PONEY
+  UPDATE_PONEY,
+  TOGGLE_VIEW_DELETED_PONEYS
 } from "./constants";
 
 export function loadPoneys() {
@@ -137,5 +138,11 @@ export function login(data) {
 export function logout() {
   return {
     type: LOGOUT
+  };
+}
+
+export function toggleViewDeletedPoneys() {
+  return {
+    type: TOGGLE_VIEW_DELETED_PONEYS
   };
 }

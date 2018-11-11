@@ -2,10 +2,11 @@ import {
   ADD_PONEY,
   DELETE_PONEY,
   LOAD_PONEYS,
-  UPDATE_PONEY
+  UPDATE_PONEY,
+  TOGGLE_VIEW_DELETED_PONEYS
 } from "../constants";
 
-const initialState = { list: [], loading: false, error: null };
+const initialState = { list: [], viewDeleted: false };
 
 export default function poneysReducer(state = initialState, action) {
   switch (action.type) {
@@ -23,6 +24,11 @@ export default function poneysReducer(state = initialState, action) {
       return {
         ...state,
         list: state.list.filter(p => p._id !== action.data)
+      };
+    case TOGGLE_VIEW_DELETED_PONEYS:
+      return {
+        ...state,
+        viewDeleted: !state.viewDeleted
       };
     case UPDATE_PONEY:
       return {

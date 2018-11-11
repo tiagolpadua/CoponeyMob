@@ -23,20 +23,28 @@ class ListaPoneysScreen extends React.Component {
   }
 
   render() {
-    const { poneys } = this.props;
+    let { poneys } = this.props;
+
+    let listExibicao = poneys.list.filter(
+      p => this.props.poneys.viewDeleted === !!p.excluido
+    );
 
     return (
       <View>
         <FlatList
-          data={poneys.list}
+          data={listExibicao}
           extraData={this.props.profile}
           renderItem={({ item }) => (
             <ListItem noIndent>
               <Left>
-                <Text style={styles.item}>{item.nome}</Text>
+                <Text
+                  style={[styles.item, item.excluido ? styles.tachado : ""]}
+                >
+                  {item.nome}
+                </Text>
               </Left>
               <Right>
-                {this.props.profile.user && (
+                {this.props.profile.user && !item.excluido && (
                   <View style={{ flexDirection: "row", flex: 1 }}>
                     <Button
                       primary
@@ -98,5 +106,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
     width: 120
+  },
+  tachado: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid"
   }
 });
