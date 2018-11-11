@@ -23,7 +23,9 @@ export default function poneysReducer(state = initialState, action) {
     case DELETE_PONEY:
       return {
         ...state,
-        list: state.list.filter(p => p._id !== action.data)
+        list: state.list.map(p =>
+          p._id === action.data ? { ...p, excluido: true } : p
+        )
       };
     case TOGGLE_VIEW_DELETED_PONEYS:
       return {
