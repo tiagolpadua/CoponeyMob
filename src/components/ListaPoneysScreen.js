@@ -4,7 +4,7 @@ import React from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { deletePoney } from "../actions";
+import { loadPoneys, deletePoney } from "../actions";
 
 class ListaPoneysScreen extends React.Component {
   constructor(props) {
@@ -19,6 +19,10 @@ class ListaPoneysScreen extends React.Component {
       { text: "Não", style: "cancel" }
     ]);
   };
+
+  componentDidMount() {
+    this.props.loadPoneys();
+  }
 
   render() {
     const { poneys } = this.props;
@@ -58,6 +62,7 @@ ListaPoneysScreen.propTypes = {
   poneys: PropTypes.object,
   profile: PropTypes.object,
   deletePoney: PropTypes.func,
+  loadPoneys: PropTypes.func,
   navigation: PropTypes.object
 };
 
@@ -69,7 +74,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ deletePoney }, dispatch);
+  bindActionCreators({ loadPoneys, deletePoney }, dispatch);
 
 const styles = StyleSheet.create({
   itemContainer: {

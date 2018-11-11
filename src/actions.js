@@ -1,23 +1,54 @@
-import { ADD_PONEY, DELETE_PONEY, LOGIN, LOGOUT } from "./constants";
+import { loadPoneysAPI } from "./api/constants";
+import {
+  ADD_PONEY,
+  DELETE_PONEY,
+  LOAD_PONEYS_ERROR,
+  LOAD_PONEYS_PROCESSING,
+  LOAD_PONEYS_SUCCESS,
+  LOGIN,
+  LOGOUT
+} from "./constants";
 
-export function addPoney(poney) {
+export function loadPoneys() {
+  return dipatch => {
+    dipatch({
+      type: LOAD_PONEYS_PROCESSING,
+      data: true
+    });
+    loadPoneysAPI()
+      .then(res => {
+        dipatch({
+          type: LOAD_PONEYS_SUCCESS,
+          data: res.body
+        });
+      })
+      .catch(error => {
+        dipatch({
+          type: LOAD_PONEYS_ERROR,
+          error
+        });
+      });
+  };
+}
+
+export function addPoney(data) {
   return {
     type: ADD_PONEY,
-    poney
+    data
   };
 }
 
-export function deletePoney(poney) {
+export function deletePoney(data) {
   return {
     type: DELETE_PONEY,
-    poney
+    data
   };
 }
 
-export function login(user) {
+export function login(data) {
   return {
     type: LOGIN,
-    user
+    data
   };
 }
 
