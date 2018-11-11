@@ -1,5 +1,5 @@
 {
-  "name": "empty-project-template",
+  "name": "coponeymob",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^8.0.0",
     "expo": "^31.0.2",
+    "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz"
   },
