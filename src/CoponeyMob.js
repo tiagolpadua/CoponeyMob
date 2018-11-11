@@ -1,35 +1,13 @@
-import { Text } from "native-base";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { createStackNavigator } from "react-navigation";
+import { StyleSheet, View } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay";
 import { Provider } from "react-redux";
 import Reactotron from "reactotron-react-native";
-import { MantemPoneyScreen } from "./components/MantemPoneyScreen";
-import ListaPoneysScreen from "./components/ListaPoneysScreen";
-import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
 import configureStore from "./configureStore";
+import CoponeyMobMainView from "./CoponeyMobMainView";
 import "./ReactotronConfig";
 
 Reactotron.log("Testando a conexão com o Reactotron.");
-
-const RootStack = createStackNavigator(
-  {
-    ListagemPoneys: {
-      screen: ListaPoneysScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: "Lista de Poneys",
-        headerRight: <HeaderButtonsComponent navigation={navigation} />
-        //headerRight: ({navigate}) => <HeaderButtonsComponent navigate={navigate}/>
-      })
-    },
-    MantemPoney: MantemPoneyScreen
-  },
-  {
-    initialRouteName: "ListagemPoneys"
-  }
-);
-
-// const store = createStore(reducer, applyMiddleware(thunk));
 
 const store = configureStore();
 
@@ -54,16 +32,17 @@ export default class CoponeyMob extends React.Component {
     if (!this.state.isReady) {
       return (
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Carregando...</Text>
-          <Image source={require("./assets/loading.gif")} />
+          <Spinner
+            visible={true}
+            textContent={"Iniciando..."}
+            textStyle={styles.spinnerTextStyle}
+          />
         </View>
       );
     } else {
       return (
         <Provider store={store}>
-          <View style={styles.container}>
-            <RootStack />
-          </View>
+          <CoponeyMobMainView />
         </Provider>
       );
     }
@@ -82,5 +61,8 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 20
+  },
+  spinnerTextStyle: {
+    color: "#FFF"
   }
 });

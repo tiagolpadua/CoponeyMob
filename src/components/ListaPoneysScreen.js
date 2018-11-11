@@ -11,8 +11,6 @@ class ListaPoneysScreen extends React.Component {
     super(props);
   }
 
-  noop = () => null;
-
   handleDeletePoney = poney => {
     Alert.alert("Exclusão", `Confirma a exclusão do poney ${poney.nome}?`, [
       { text: "Sim", onPress: () => this.props.deletePoney(poney) },
