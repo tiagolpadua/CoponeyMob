@@ -1,4 +1,5 @@
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
+const LOAD_PONEYS = "LOAD_PONEYS";
 
-export { LOGIN, LOGOUT };
+export { LOGIN, LOGOUT, LOAD_PONEYS };

@@ -1,12 +1,18 @@
-import { Left, ListItem, Text, Right, Button, Icon } from "native-base";
+import { Button, Icon, Left, ListItem, Right, Text } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { loadPoneys } from "../actions";
 
 class ListarPoneysScreen extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.loadPoneys();
   }
 
   render() {
@@ -81,11 +87,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ loadPoneys }, dispatch);
 
 ListarPoneysScreen.propTypes = {
   poneys: PropTypes.object,
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  loadPoneys: PropTypes.func
 };
 
 export default connect(

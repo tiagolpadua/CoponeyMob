@@ -1,26 +1,14 @@
-let poneys = [
-  { nome: "Tremor" },
-  { nome: "Tzar" },
-  { nome: "Pégaso" },
-  { nome: "Epona" },
-  { nome: "Macedonio" },
-  { nome: "Vicário" },
-  { nome: "Tro" },
-  { nome: "Nicanor" },
-  { nome: "Niceto" },
-  { nome: "Odón" },
-  { nome: "Relâmpago" },
-  { nome: "Pio" },
-  { nome: "Elegante" },
-  { nome: "Pompeu" }
-];
+import { LOAD_PONEYS } from "../constants";
 
-poneys = poneys.map((p, idx) => ({ ...p, _id: idx + "" }));
-
-const initialState = { list: poneys, viewDeleted: false };
+const initialState = { list: [], viewDeleted: false };
 
 export default function poneysReducer(state = initialState, action) {
   switch (action.type) {
+    case LOAD_PONEYS:
+      return {
+        ...state,
+        list: [...action.data]
+      };
     default:
       return state;
   }
