@@ -115,11 +115,7 @@ class HeaderButtonsComponent extends React.Component {
               <Icon
                 style={[styles.headerIconFont, styles.headerIconMargin]}
                 name="add"
-                onPress={() =>
-                  Alert.alert("Incluir", "Aqui irá a tela de incluir ponei", [
-                    { text: "OK" }
-                  ])
-                }
+                onPress={() => this.props.navigation.navigate("AdicionarPoney")}
               />
             </Button>
             <Button transparent onPress={this.handleLogout}>
@@ -160,7 +156,8 @@ const styles = StyleSheet.create({
 HeaderButtonsComponent.propTypes = {
   profile: PropTypes.object,
   poneys: PropTypes.object,
-  toggleViewDeletedPoneys: PropTypes.func
+  toggleViewDeletedPoneys: PropTypes.func,
+  navigation: PropTypes.object
 };
 
 const mapStateToProps = state => {

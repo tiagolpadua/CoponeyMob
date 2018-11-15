@@ -3,14 +3,21 @@ import { StyleSheet, View } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import ListarPoneysScreen from "./components/ListarPoneysScreen";
 import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
+import AdicionarPoneyScreen from "./components/AdicionarPoneyScreen";
 
 const RootStack = createStackNavigator(
   {
     ListarPoneys: {
       screen: ListarPoneysScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: "Lista de Poneys",
-        headerRight: <HeaderButtonsComponent />
+        headerRight: <HeaderButtonsComponent navigation={navigation} />
+      })
+    },
+    AdicionarPoney: {
+      screen: AdicionarPoneyScreen,
+      navigationOptions: {
+        title: "Adicionar Poney"
       }
     }
   },
