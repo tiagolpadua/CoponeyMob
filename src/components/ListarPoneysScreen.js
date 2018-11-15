@@ -37,7 +37,7 @@ class ListarPoneysScreen extends React.Component {
                 </Text>
               </Left>
               <Right>
-                {this.props.profile.user && (
+                {this.props.profile.user && !item.excluido && (
                   <View style={{ flexDirection: "row", flex: 1 }}>
                     <Button
                       primary
