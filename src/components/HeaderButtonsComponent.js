@@ -13,7 +13,7 @@ import React from "react";
 import { Alert, Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { login, logout } from "../actions";
+import { login, logout, toggleViewDeletedPoneys } from "../actions";
 
 class HeaderButtonsComponent extends React.Component {
   constructor(props) {
@@ -103,6 +103,12 @@ class HeaderButtonsComponent extends React.Component {
   render() {
     return (
       <View style={styles.headerButtonContainer}>
+        <Button transparent onPress={this.props.toggleViewDeletedPoneys}>
+          <Icon
+            style={[styles.headerIconFont, styles.headerIconMargin]}
+            name={this.props.poneys.viewDeleted ? "eye-off" : "eye"}
+          />
+        </Button>
         {this.props.profile.user ? (
           <View style={styles.headerButtonContainer}>
             <Button transparent>
@@ -153,7 +159,8 @@ const styles = StyleSheet.create({
 
 HeaderButtonsComponent.propTypes = {
   profile: PropTypes.object,
-  poneys: PropTypes.object
+  poneys: PropTypes.object,
+  toggleViewDeletedPoneys: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -164,7 +171,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ login, logout }, dispatch);
+  bindActionCreators({ login, logout, toggleViewDeletedPoneys }, dispatch);
 
 HeaderButtonsComponent.propTypes = {
   login: PropTypes.func,
