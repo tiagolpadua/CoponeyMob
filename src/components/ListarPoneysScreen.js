@@ -11,6 +11,13 @@ class ListarPoneysScreen extends React.Component {
     super(props);
   }
 
+  handleDeletePoney = poney => {
+    Alert.alert("Exclusão", `Confirma a exclusão do poney ${poney.nome}?`, [
+      { text: "Sim", onPress: () => alert("Ponei excluído: " + poney.nome) },
+      { text: "Não", style: "cancel" }
+    ]);
+  };
+
   componentDidMount() {
     this.props.loadPoneys();
   }
@@ -50,16 +57,7 @@ class ListarPoneysScreen extends React.Component {
                     >
                       <Icon name="create" />
                     </Button>
-                    <Button
-                      danger
-                      onPress={() =>
-                        Alert.alert(
-                          "Excluir",
-                          "Aqui exibirá a confirmação de exclusão do ponei",
-                          [{ text: "OK" }]
-                        )
-                      }
-                    >
+                    <Button danger onPress={() => this.handleDeletePoney(item)}>
                       <Icon name="trash" />
                     </Button>
                   </View>
