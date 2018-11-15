@@ -8,17 +8,20 @@ import {
   Text,
   View
 } from "native-base";
+import PropTypes from "prop-types";
 import React from "react";
 import { Alert, Image, Modal, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { login, logout } from "../actions";
 
 class HeaderButtonsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
-      inputUserName: "",
-      inputPassword: "",
-      user: null
+      inputUserName: "admin",
+      inputPassword: "123456"
     };
   }
 
@@ -30,25 +33,13 @@ class HeaderButtonsComponent extends React.Component {
     this.setState({ modalVisible: true });
   };
 
-  login = user => {
-    this.setState({
-      user
-    });
-  };
-
-  logout = () => {
-    this.setState({
-      user: null
-    });
-  };
-
   handleLogin = () => {
     this.closeLoginModal();
     if (
       this.state.inputUserName === "admin" &&
       this.state.inputPassword === "123456"
     ) {
-      this.login({ name: this.state.inputUserName });
+      this.props.login({ name: this.state.inputUserName });
     } else {
       Alert.alert("Erro", "Credenciais inválidas", [{ text: "OK" }]);
     }
@@ -57,8 +48,11 @@ class HeaderButtonsComponent extends React.Component {
   handleLogout = () => {
     Alert.alert(
       "Logout",
-      this.state.user.name + ", confirma o logout?",
-      [{ text: "Sim", onPress: this.logout }, { text: "Não", style: "cancel" }],
+      this.props.profile.user.name + ", confirma o logout?",
+      [
+        { text: "Sim", onPress: this.props.logout },
+        { text: "Não", style: "cancel" }
+      ],
       { cancelable: false }
     );
   };
@@ -109,7 +103,7 @@ class HeaderButtonsComponent extends React.Component {
   render() {
     return (
       <View style={styles.headerButtonContainer}>
-        {this.state.user ? (
+        {this.props.profile.user ? (
           <View style={styles.headerButtonContainer}>
             <Button transparent onPress={this.handleLogout}>
               <Image
@@ -146,4 +140,27 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HeaderButtonsComponent;
+HeaderButtonsComponent.propTypes = {
+  profile: PropTypes.object,
+  poneys: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    profile: state.profile,
+    poneys: state.poneys
+  };
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ login, logout }, dispatch);
+
+HeaderButtonsComponent.propTypes = {
+  login: PropTypes.func,
+  logout: PropTypes.func
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HeaderButtonsComponent);
