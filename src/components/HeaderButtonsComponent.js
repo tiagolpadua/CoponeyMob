@@ -105,6 +105,17 @@ class HeaderButtonsComponent extends React.Component {
       <View style={styles.headerButtonContainer}>
         {this.props.profile.user ? (
           <View style={styles.headerButtonContainer}>
+            <Button transparent>
+              <Icon
+                style={[styles.headerIconFont, styles.headerIconMargin]}
+                name="add"
+                onPress={() =>
+                  Alert.alert("Incluir", "Aqui irá a tela de incluir ponei", [
+                    { text: "OK" }
+                  ])
+                }
+              />
+            </Button>
             <Button transparent onPress={this.handleLogout}>
               <Image
                 style={styles.headerIconMargin}

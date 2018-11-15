@@ -1,7 +1,7 @@
-import { Left, ListItem, Text } from "native-base";
+import { Left, ListItem, Text, Right, Button, Icon } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
 class ListarPoneysScreen extends React.Component {
@@ -14,11 +14,43 @@ class ListarPoneysScreen extends React.Component {
       <View>
         <FlatList
           data={this.props.poneys.list}
+          extraData={this.props.profile}
           renderItem={({ item }) => (
             <ListItem noIndent>
               <Left>
                 <Text style={styles.item}>{item.nome}</Text>
               </Left>
+              <Right>
+                {this.props.profile.user && (
+                  <View style={{ flexDirection: "row", flex: 1 }}>
+                    <Button
+                      primary
+                      onPress={() =>
+                        Alert.alert(
+                          "Alterar",
+                          "Aqui irá a tela de Alterar ponei",
+                          [{ text: "OK" }]
+                        )
+                      }
+                      style={{ marginRight: 10 }}
+                    >
+                      <Icon name="create" />
+                    </Button>
+                    <Button
+                      danger
+                      onPress={() =>
+                        Alert.alert(
+                          "Excluir",
+                          "Aqui exibirá a confirmação de exclusão do ponei",
+                          [{ text: "OK" }]
+                        )
+                      }
+                    >
+                      <Icon name="trash" />
+                    </Button>
+                  </View>
+                )}
+              </Right>
             </ListItem>
           )}
           keyExtractor={item => item._id}
@@ -44,14 +76,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    poneys: state.poneys
+    poneys: state.poneys,
+    profile: state.profile
   };
 };
 
 const mapDispatchToProps = {};
 
 ListarPoneysScreen.propTypes = {
-  poneys: PropTypes.object
+  poneys: PropTypes.object,
+  profile: PropTypes.object
 };
 
 export default connect(
