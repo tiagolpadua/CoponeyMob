@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addPoney } from "../actions";
 import MantemPoneyForm from "./MantemPoneyForm";
 
 class AdicionaPoneyScreen extends React.Component {
@@ -9,7 +11,7 @@ class AdicionaPoneyScreen extends React.Component {
   }
 
   handleAddPoney = poney => {
-    alert("Ponei adicionado: " + JSON.stringify(poney));
+    this.props.addPoney(poney);
     this.props.navigation.navigate("ListarPoneys");
   };
 
@@ -30,7 +32,13 @@ AdicionaPoneyScreen.propTypes = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addPoney
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
