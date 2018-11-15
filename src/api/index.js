@@ -9,3 +9,7 @@ export function loadPoneysAPI() {
 export function addPoneyAPI(poney) {
   return request.post(URI).send(poney);
 }
+
+export function updatePoneyAPI(poney) {
+  return request.put(URI + "/" + poney._id).send(poney);
+}

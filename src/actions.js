@@ -1,10 +1,11 @@
-import { loadPoneysAPI, addPoneyAPI } from "./api";
+import { loadPoneysAPI, addPoneyAPI, updatePoneyAPI } from "./api";
 import {
   LOAD_PONEYS,
   LOGIN,
   LOGOUT,
   TOGGLE_VIEW_DELETED_PONEYS,
-  ADD_PONEY
+  ADD_PONEY,
+  UPDATE_PONEY
 } from "./constants";
 
 export function loadPoneys() {
@@ -29,6 +30,21 @@ export function addPoney(data) {
         dipatch({
           type: ADD_PONEY,
           data: { ...data, _id: res.body }
+        });
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  };
+}
+
+export function updatePoney(data) {
+  return dipatch => {
+    updatePoneyAPI(data)
+      .then(() => {
+        dipatch({
+          type: UPDATE_PONEY,
+          data
         });
       })
       .catch(error => {
