@@ -42,11 +42,9 @@ class ListarPoneysScreen extends React.Component {
                     <Button
                       primary
                       onPress={() =>
-                        Alert.alert(
-                          "Alterar",
-                          "Aqui irá a tela de Alterar ponei",
-                          [{ text: "OK" }]
-                        )
+                        this.props.navigation.navigate("AtualizarPoney", {
+                          poney: item
+                        })
                       }
                       style={{ marginRight: 10 }}
                     >
@@ -107,7 +105,8 @@ const mapDispatchToProps = dispatch =>
 ListarPoneysScreen.propTypes = {
   poneys: PropTypes.object,
   profile: PropTypes.object,
-  loadPoneys: PropTypes.func
+  loadPoneys: PropTypes.func,
+  navigation: PropTypes.object
 };
 
 export default connect(

@@ -4,6 +4,7 @@ import { createStackNavigator } from "react-navigation";
 import ListarPoneysScreen from "./components/ListarPoneysScreen";
 import HeaderButtonsComponent from "./components/HeaderButtonsComponent";
 import AdicionarPoneyScreen from "./components/AdicionarPoneyScreen";
+import AtualizarPoneyScreen from "./components/AtualizarPoneyScreen";
 
 const RootStack = createStackNavigator(
   {
@@ -18,6 +19,12 @@ const RootStack = createStackNavigator(
       screen: AdicionarPoneyScreen,
       navigationOptions: {
         title: "Adicionar Poney"
+      }
+    },
+    AtualizarPoney: {
+      screen: AtualizarPoneyScreen,
+      navigationOptions: {
+        title: "Atualizar Poney"
       }
     }
   },
