@@ -1,11 +1,15 @@
 import { Spinner } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Provider } from "react-redux";
 import Reactotron from "reactotron-react-native";
+import configureStore from "./configureStore";
 import CoponeyMobNav from "./CoponeyMobNav";
 import "./ReactotronConfig";
 
 Reactotron.log("Testando a conexão com o Reactotron.");
+
+const store = configureStore();
 
 export default class CoponeyMob extends React.Component {
   constructor(props) {
@@ -32,7 +36,11 @@ export default class CoponeyMob extends React.Component {
         </View>
       );
     } else {
-      return <CoponeyMobNav />;
+      return (
+        <Provider store={store}>
+          <CoponeyMobNav />
+        </Provider>
+      );
     }
   }
 }
