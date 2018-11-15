@@ -1,9 +1,9 @@
+import { Spinner } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Reactotron from "reactotron-react-native";
-import ListaPoneysScreen from "./components/ListaPoneysScreen";
+import CoponeyMobNav from "./CoponeyMobNav";
 import "./ReactotronConfig";
-import { Spinner } from "native-base";
 
 Reactotron.log("Testando a conexão com o Reactotron.");
 
@@ -32,7 +32,7 @@ export default class CoponeyMob extends React.Component {
         </View>
       );
     } else {
-      return <ListaPoneysScreen />;
+      return <CoponeyMobNav />;
     }
   }
 }

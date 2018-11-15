@@ -2,7 +2,7 @@ import { Left, ListItem, Text } from "native-base";
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-class ListaPoneysScreen extends React.Component {
+class ListarPoneysScreen extends React.Component {
   poneys = [
     { nome: "Tremor" },
     { nome: "Tzar" },
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListaPoneysScreen;
+export default ListarPoneysScreen;
