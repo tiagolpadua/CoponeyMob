@@ -13,3 +13,7 @@ export function addPoneyAPI(poney) {
 export function updatePoneyAPI(poney) {
   return request.put(URI + "/" + poney._id).send(poney);
 }
+
+export function deletePoneyAPI(id) {
+  return request.delete(URI + "/exclusaologica/" + id);
+}

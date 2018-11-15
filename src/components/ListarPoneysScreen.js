@@ -4,7 +4,7 @@ import React from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadPoneys } from "../actions";
+import { loadPoneys, deletePoney } from "../actions";
 
 class ListarPoneysScreen extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class ListarPoneysScreen extends React.Component {
 
   handleDeletePoney = poney => {
     Alert.alert("Exclusão", `Confirma a exclusão do poney ${poney.nome}?`, [
-      { text: "Sim", onPress: () => alert("Ponei excluído: " + poney.nome) },
+      { text: "Sim", onPress: () => this.props.deletePoney(poney._id) },
       { text: "Não", style: "cancel" }
     ]);
   };
@@ -98,13 +98,14 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ loadPoneys }, dispatch);
+  bindActionCreators({ loadPoneys, deletePoney }, dispatch);
 
 ListarPoneysScreen.propTypes = {
   poneys: PropTypes.object,
   profile: PropTypes.object,
   loadPoneys: PropTypes.func,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  deletePoney: PropTypes.func
 };
 
 export default connect(
